@@ -2,6 +2,7 @@ package io.geewit.core.okhttp.utils;
 
 import io.geewit.core.okhttp.interceptor.HttpLoggingInterceptor;
 import okhttp3.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
 
@@ -189,14 +190,14 @@ public class OkHttpUtils {
     }
 
 	public static Response get(String url, Cookie cookie) throws IOException {
-		Request request = new Request.Builder().url(url).addHeader("Cookie", cookie.name() + "=" + cookie.name()).get().build();
+		Request request = new Request.Builder().url(url).addHeader(HttpHeaders.COOKIE, cookie.name() + "=" + cookie.name()).get().build();
 		OkHttpClient httpClient = determineClient(url);
 		Response response = httpClient.newCall(request).execute();
 		return response;
 	}
 
     public static Response get(String url, String cookieName, String cookieValue) throws IOException {
-        Request request = new Request.Builder().url(url).addHeader("Cookie", cookieName + "=" + cookieValue).get().build();
+        Request request = new Request.Builder().url(url).addHeader(HttpHeaders.COOKIE, cookieName + "=" + cookieValue).get().build();
 		OkHttpClient httpClient = determineClient(url);
         Response response = httpClient.newCall(request).execute();
         return response;
@@ -216,7 +217,7 @@ public class OkHttpUtils {
 		RequestBody requestBody = RequestBody.create(mediaType, body);
 		Request.Builder requestBuilder = new Request.Builder().url(uri.toString());
 		if(cookie != null) {
-			requestBuilder.addHeader("Cookie", cookie.name() + "=" + cookie.name());
+			requestBuilder.addHeader(HttpHeaders.COOKIE, cookie.name() + "=" + cookie.name());
 		}
 		Request request = requestBuilder.method(httpMethod.name(), requestBody).build();
 		OkHttpClient httpClient = determineClient(uri);
@@ -229,7 +230,7 @@ public class OkHttpUtils {
 		RequestBody requestBody = RequestBody.create(mediaType, body);
 		Request.Builder requestBuilder = new Request.Builder().url(url);
 		if(cookie != null) {
-			requestBuilder.addHeader("Cookie", cookie.name() + "=" + cookie.name());
+			requestBuilder.addHeader(HttpHeaders.COOKIE, cookie.name() + "=" + cookie.name());
 		}
 		Request request = requestBuilder.method(httpMethod.name(), requestBody).build();
 		OkHttpClient httpClient = determineClient(url);
