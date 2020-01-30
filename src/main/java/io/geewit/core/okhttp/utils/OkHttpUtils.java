@@ -112,7 +112,7 @@ public class OkHttpUtils {
 				.hostnameVerifier((hostname, session) -> true)
 				.addInterceptor(loggingInterceptor)
 				.sslSocketFactory(Objects.requireNonNull(createSSLSocketFactory()), createTrustManager());
-        if(org.apache.commons.lang3.StringUtils.isNotEmpty(proxyHost)) {
+        if(proxyHost != null && proxyHost.length() > 0) {
             httpClientBuilder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort)));
         }
 		return httpClientBuilder.build();
@@ -204,7 +204,7 @@ public class OkHttpUtils {
     }
 
 	public static Response postJson(String url, String body) throws IOException {
-		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE);
+		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
 		RequestBody requestBody = RequestBody.create(mediaType, body);
 		Request request = new Request.Builder().url(url).post(requestBody).build();
 		OkHttpClient httpClient = determineClient(url);
@@ -213,7 +213,7 @@ public class OkHttpUtils {
 	}
 
 	public static Response request(URI uri, HttpMethod httpMethod, Cookie cookie, Map<String, String> params, String body) throws IOException {
-		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE);
+		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
 		RequestBody requestBody = RequestBody.create(mediaType, body);
 		Request.Builder requestBuilder = new Request.Builder().url(uri.toString());
 		if(cookie != null) {
@@ -226,7 +226,7 @@ public class OkHttpUtils {
 	}
 
 	public static Response request(String url, HttpMethod httpMethod, Cookie cookie, Map<String, String> params, String body) throws IOException {
-		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE);
+		MediaType mediaType = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
 		RequestBody requestBody = RequestBody.create(mediaType, body);
 		Request.Builder requestBuilder = new Request.Builder().url(url);
 		if(cookie != null) {

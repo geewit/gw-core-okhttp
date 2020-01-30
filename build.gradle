@@ -5,7 +5,6 @@ dependencies {
         exclude group: 'org.slf4j', module: 'logback'
     }
     compile("com.squareup.okhttp3:okhttp:$okhttp_version")
-    compile("org.apache.commons:commons-lang3:$commons_lang3_version")
     compile("org.springframework:spring-web:$spring_version")
     compile("org.springframework.boot:spring-boot:$spring_boot_version")
     compile("org.springframework.boot:spring-boot-autoconfigure:$spring_boot_version")
